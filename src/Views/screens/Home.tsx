@@ -43,7 +43,6 @@ const Home: React.FC<NavigateApp> = ({ navigation }) => {
         </Text>
       </View>
     );
-    error && navigation.push("Login");
   }
   if (isSuccess) {
     const { ids, entities } = todos;
