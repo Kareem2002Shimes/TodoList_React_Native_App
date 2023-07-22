@@ -1,4 +1,3 @@
-import { FetchArgs } from "@reduxjs/toolkit/dist/query";
 import { apiSlice } from "../../app/api/apiSlice";
 import { logOut, setCredentials } from "./authSlice";
 

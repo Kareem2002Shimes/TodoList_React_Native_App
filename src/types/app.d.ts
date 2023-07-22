@@ -1,8 +1,6 @@
-import {
-  NativeStackNavigationProp,
-  NativeStackScreenProps,
-} from "@react-navigation/native-stack";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../App";
+import { RouteProp } from "@react-navigation/native";
 
 export type Todo = {
   id: string;
@@ -13,6 +11,6 @@ export type Todo = {
   updatedAt: Date;
 };
 export type NavigateApp = {
-  navigation: NativeStackNavigationProp<RootStackParamList, string>;
-  route: RouteProp<RootStackParamList, string>;
+  navigation: NativeStackNavigationProp<RootStackParamList, any>;
+  route: RouteProp<RootStackParamList, any>;
 };

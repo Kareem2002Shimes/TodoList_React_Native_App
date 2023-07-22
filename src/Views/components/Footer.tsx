@@ -1,5 +1,5 @@
 import { BASE_URL } from "@env";
-import axios from "axios";
+
 import { useState } from "react";
 import {
   View,
@@ -9,9 +9,6 @@ import {
   Text,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { RootStackParamList } from "../../../App";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useNavigation } from "@react-navigation/native";
 import Toast from "react-native-toast-message";
 import { useAddNewTodoMutation } from "../../features/todos/todosApiSlice";
 import useAuth from "../../hooks/useAuth";

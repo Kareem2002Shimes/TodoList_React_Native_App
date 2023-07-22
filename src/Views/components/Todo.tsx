@@ -2,7 +2,6 @@ import { EntityId } from "@reduxjs/toolkit";
 
 import {
   useDeleteTodoMutation,
-  useGetTodosQuery,
   useUpdateTodoMutation,
 } from "../../features/todos/todosApiSlice";
 import { memo } from "react";

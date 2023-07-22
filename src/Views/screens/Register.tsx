@@ -3,10 +3,6 @@ import { View, Text, SafeAreaView, ScrollView, Alert } from "react-native";
 
 import Input from "../components/Input";
 import Loader from "../components/Loader";
-import { RootStackParamList } from "../../../App";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { BASE_URL } from "@env";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import CustomButton from "../components/CustomButton";
 import { ISignUp, signUpSchema } from "../../validation/auth";
