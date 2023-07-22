@@ -1,87 +1,85 @@
-import React from "react";
-import { View, Text, TextInput, StyleSheet } from "react-native";
-import COLORS from "../../constants/colors";
-
+import { TextInput, StyleSheet, View, Text } from "react-native";
+import { useState } from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { Controller } from "react-hook-form";
 type InputProps = {
-  label: string;
-  iconName: string;
-  onFocus: () => void;
-  error: string | undefined;
-  onChangeText: (text: string) => void;
+  control: any;
   placeholder: string;
-  password?: boolean;
+  name: string;
+  secureTextEntry?: boolean;
+  rules?: {};
 };
 const Input = ({
-  label,
-  iconName,
-  error,
-  password,
-  onFocus = () => {},
-  ...props
+  control,
+  placeholder,
+  rules,
+  name,
+  secureTextEntry,
 }: InputProps) => {
-  const [hidePassword, setHidePassword] = React.useState(password);
-  const [isFocused, setIsFocused] = React.useState(false);
+  const [hidePassword, setHidePassword] = useState<boolean | undefined>(
+    secureTextEntry
+  );
   return (
-    <View style={{ marginBottom: 20 }}>
-      <Text style={style.label}>{label}</Text>
-      <View
-        style={[
-          style.inputContainer,
-          {
-            borderColor: error
-              ? COLORS.red
-              : isFocused
-              ? COLORS.darkBlue
-              : COLORS.light,
-            alignItems: "center",
-          },
-        ]}
-      >
-        <Icon
-          name={iconName}
-          style={{ color: COLORS.darkBlue, fontSize: 22, marginRight: 10 }}
-        />
-        <TextInput
-          autoCorrect={false}
-          onFocus={() => {
-            onFocus();
-            setIsFocused(true);
-          }}
-          onBlur={() => setIsFocused(false)}
-          secureTextEntry={hidePassword}
-          style={{ color: COLORS.darkBlue, flex: 1 }}
-          {...props}
-        />
-        {password && (
-          <Icon
-            onPress={() => setHidePassword(!hidePassword)}
-            name={hidePassword ? "eye-off-outline" : "eye-outline"}
-            style={{ color: COLORS.darkBlue, fontSize: 22 }}
-          />
-        )}
-      </View>
-      {error && (
-        <Text style={{ marginTop: 7, color: COLORS.red, fontSize: 12 }}>
-          {error}
-        </Text>
+    <Controller
+      control={control}
+      name={name}
+      rules={rules}
+      render={({
+        field: { onChange, value, onBlur },
+        fieldState: { error },
+      }) => (
+        <>
+          <View
+            style={[
+              styles.container,
+              { borderColor: error ? "red" : "#e8e8e8" },
+            ]}
+          >
+            <TextInput
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              placeholder={placeholder}
+              secureTextEntry={hidePassword}
+              style={styles.input}
+            />
+            {secureTextEntry && (
+              <Icon
+                name={hidePassword ? "eye-off-outline" : "eye-outline"}
+                style={{
+                  position: "absolute",
+                  right: 20,
+                  lineHeight: 50,
+                  fontSize: 17,
+                }}
+                onPress={() => setHidePassword(!hidePassword)}
+              />
+            )}
+          </View>
+          {error && (
+            <Text style={{ color: "red", alignSelf: "stretch" }}>
+              {error.message || "Error"}
+            </Text>
+          )}
+        </>
       )}
-    </View>
+    />
   );
 };
 
-const style = StyleSheet.create({
-  label: {
-    marginVertical: 5,
-    fontSize: 14,
-    color: COLORS.grey,
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "white",
+    position: "relative",
+    borderColor: "#e8e8e8",
+    borderWidth: 1,
+    borderRadius: 8,
+    height: 50,
+    paddingHorizontal: 20,
+    marginVertical: 10,
   },
-  inputContainer: {
-    height: 55,
-    backgroundColor: COLORS.light,
-    flexDirection: "row",
-    paddingHorizontal: 15,
-    borderWidth: 0.5,
+  input: {
+    height: "100%",
   },
 });
 

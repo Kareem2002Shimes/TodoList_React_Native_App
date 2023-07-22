@@ -5,7 +5,6 @@ import {
   ActivityIndicator,
   StyleSheet,
 } from "react-native";
-import COLORS from "../../constants/colors";
 
 const Loader: any = ({ visible = false }) => {
   const { width, height } = useWindowDimensions();
@@ -13,7 +12,7 @@ const Loader: any = ({ visible = false }) => {
     visible && (
       <View style={[style.container, { height, width }]}>
         <View style={style.loader}>
-          <ActivityIndicator size="large" color={COLORS.blue} />
+          <ActivityIndicator size="large" color={"blue"} />
           <Text style={{ marginLeft: 10, fontSize: 16 }}>Loading...</Text>
         </View>
       </View>
@@ -24,7 +23,7 @@ const Loader: any = ({ visible = false }) => {
 const style = StyleSheet.create({
   loader: {
     height: 70,
-    backgroundColor: COLORS.white,
+    backgroundColor: "white",
     marginHorizontal: 50,
     borderRadius: 5,
     flexDirection: "row",

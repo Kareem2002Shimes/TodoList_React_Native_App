@@ -3,7 +3,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./src/Views/screens/Home";
 import Login from "./src/Views/screens/Login";
 import Register from "./src/Views/screens/Register";
-import { AuthProvider } from "./src/context/AuthContext";
+import { Provider } from "react-redux";
+import { store } from "./src/app/store";
+import Toast from "react-native-toast-message";
+import { useRefreshMutation } from "./src/features/auth/authApiSlice";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -15,19 +18,20 @@ const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App(): JSX.Element {
   return (
-    <AuthProvider>
+    <Provider store={store}>
       <NavigationContainer>
         <RootStack.Navigator initialRouteName="Login">
           <RootStack.Screen
-            name="Home"
-            component={Home}
+            name="Login"
+            component={Login}
             options={{
               headerShown: false,
             }}
           />
+
           <RootStack.Screen
-            name="Login"
-            component={Login}
+            name="Home"
+            component={Home}
             options={{
               headerShown: false,
             }}
@@ -41,6 +45,7 @@ export default function App(): JSX.Element {
           />
         </RootStack.Navigator>
       </NavigationContainer>
-    </AuthProvider>
+      <Toast />
+    </Provider>
   );
 }

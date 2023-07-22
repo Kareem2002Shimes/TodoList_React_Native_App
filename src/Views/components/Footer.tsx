@@ -1,13 +1,56 @@
+import { BASE_URL } from "@env";
+import axios from "axios";
 import { useState } from "react";
-import { View, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  Text,
+} from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { RootStackParamList } from "../../../App";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useNavigation } from "@react-navigation/native";
+import Toast from "react-native-toast-message";
+import { useAddNewTodoMutation } from "../../features/todos/todosApiSlice";
+import useAuth from "../../hooks/useAuth";
 
 const Footer = () => {
+  const { id } = useAuth();
   const [textInput, setTextInput] = useState<string>("");
-  const addTodo = () => {};
+  const [addNewTodo, { isLoading, isSuccess, isError, error }] =
+    useAddNewTodoMutation();
 
+  const addTodo = async () => {
+    if (textInput) {
+      const res: any = await addNewTodo({
+        name: textInput,
+        userId: id,
+      });
+
+      Toast.show({
+        type: "success",
+        text1: res.data?.message,
+      });
+      setTextInput("");
+    } else {
+      Toast.show({
+        type: "info",
+        text1: "Are your added todo name?",
+      });
+    }
+  };
+  const errContent = (error as any)?.data?.message;
+  if (errContent) {
+    Toast.show({
+      type: "error",
+      text1: errContent,
+    });
+  }
   return (
     <View style={styles.footer}>
+      <Text style={{ color: "red" }}></Text>
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Add Todo"
